@@ -1,6 +1,6 @@
 # random_dice
 
-가속도게를 사용한 주사위 굴리기
+가속도계를 사용한 주사위 굴리기
 
 ## Getting Started
 
