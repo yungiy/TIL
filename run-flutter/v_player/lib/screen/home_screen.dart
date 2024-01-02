@@ -72,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // 커스텀 비디오 위젯 불러오기
       child: CustomVideoPlayer(
         video: video!,
+        onNewVideoPressed: onNewVideoPressed,
       ),
     );
   }
