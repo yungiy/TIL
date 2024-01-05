@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class HomeScreen extends StatelessWidget {
   static final LatLng namSanLatLng = LatLng(
     37.5512765860031, // 위도
-    126.98820233483241 , // 경도
+    126.98820233483241, // 경도
   );
   static final Marker marker = Marker(
     markerId: MarkerId('company'),
@@ -35,7 +35,6 @@ class HomeScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             }
-
             //  권한 허가된 상태
             if (snapshot.data == '위치 권한이 허가 되었습니다.') {
               return Column(
@@ -63,7 +62,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20.0),
                         ElevatedButton(
-
                           onPressed: () async {
                             final curPosition =
                                 await Geolocator.getCurrentPosition(); // 현재 위치
@@ -83,7 +81,9 @@ class HomeScreen extends StatelessWidget {
                                 return AlertDialog(
                                   title: Text('출근하기'),
                                   content: Text(
-                                    canCheck ? '출근을 하시겠습니까?' : '출근할 수 없는 위치입니다.',
+                                    canCheck
+                                        ? '출근을 하시겠습니까?'
+                                        : '출근할 수 없는 위치입니다.',
                                   ),
                                   actions: [
                                     TextButton(
