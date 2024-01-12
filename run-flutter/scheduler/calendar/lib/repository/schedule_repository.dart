@@ -12,7 +12,7 @@ class ScheduleRepository {
   final _targetUrl =
       'http://${Platform.isAndroid ? '10.0.2.2' : 'localhost'}:3000/schedule';
 
-  Future<List<ScheduleModel>> getSchedule({
+  Future<List<ScheduleModel>> getSchedules({
     required DateTime date,
   }) async {
     // 쿼리 매개변수 : queryParameters

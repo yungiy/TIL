@@ -2,9 +2,14 @@
 import 'package:calendar/component/custom_text_field.dart';
 import 'package:calendar/const/colors.dart';
 import 'package:calendar/database/drift_database.dart';
+
+// 프로바이더 설정
+import 'package:calendar/model/schedule_model.dart';
+import 'package:calendar/provider/schedule_provider.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 class ScheduleBottomSheet extends StatefulWidget {
   final DateTime selectedDate; // 선택된 날짜 상위 위젯에서 입력 받기
@@ -86,7 +91,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: onSavePressed,
+                    onPressed: () => onSavedPressed(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: PRIMARY_COLOR,
                     ),
@@ -108,20 +113,22 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
   }
 
   // 저장 함수
-  void onSavePressed() async {
+  void onSavedPressed(BuildContext context) async {
     // 폼 검증하기
     if (formKey.currentState!.validate()) {
       // 폼 저장하기
       formKey.currentState!.save();
-      //일정 생성하기
-      await GetIt.I<LocalDatabase>().createSchedule(
-        SchedulesCompanion(
-          startTime: Value(startTime!),
-          endTime: Value(endTime!),
-          content: Value(content!),
-          date: Value(widget.selectedDate),
-        ),
-      );
+
+      // 프로바이더 설정
+      context.read<ScheduleProvider>().createSchedule(
+            schedule: ScheduleModel(
+              id: 'new_model', // 임시 아이디 값
+              content: content!,
+              date: widget.selectedDate,
+              startTime: startTime!,
+              endTime: endTime!,
+            ),
+          );
       Navigator.of(context).pop(); // 일정 생성 후 종료
     }
   }
