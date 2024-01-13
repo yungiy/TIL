@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "234790193126",
+    "project_id": "flutter-testing-app-yung-c514c",
+    "storage_bucket": "flutter-testing-app-yung-c514c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234790193126:android:1148f64483540dffc53827",
+        "android_client_info": {
+          "package_name": "com.example.calendar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq0M5qd2w-fDWFWZliEJMCxgb1mETQ3FM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
