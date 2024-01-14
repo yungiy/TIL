@@ -2,13 +2,13 @@
 import 'package:calendar/component/custom_text_field.dart';
 import 'package:calendar/const/colors.dart';
 import 'package:calendar/database/drift_database.dart';
-
-// 프로바이더 설정
 import 'package:calendar/model/schedule_model.dart';
-import 'package:calendar/provider/schedule_provider.dart';
-import 'package:drift/drift.dart' hide Column;
+
+// 파이어베이스 설정
+import 'package:uuid/uuid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class ScheduleBottomSheet extends StatefulWidget {
@@ -119,16 +119,20 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
       // 폼 저장하기
       formKey.currentState!.save();
 
-      // 프로바이더 설정
-      context.read<ScheduleProvider>().createSchedule(
-            schedule: ScheduleModel(
-              id: 'new_model', // 임시 아이디 값
-              content: content!,
-              date: widget.selectedDate,
-              startTime: startTime!,
-              endTime: endTime!,
-            ),
-          );
+      // 스케줄 모델 생성 및 파이어 스토어 삽입
+      final schedule = ScheduleModel(
+        id: Uuid().v4(),
+        content: content!,
+        date: widget.selectedDate,
+        startTime: startTime!,
+        endTime: endTime!,
+      );
+
+      await FirebaseFirestore.instance
+          .collection('schedule')
+          .doc(schedule.id)
+          .set(schedule.toJson());
+
       Navigator.of(context).pop(); // 일정 생성 후 종료
     }
   }

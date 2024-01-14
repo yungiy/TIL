@@ -9,7 +9,15 @@ import 'package:calendar/provider/schedule_provider.dart';
 import 'package:calendar/repository/schedule_repository.dart';
 import 'package:provider/provider.dart';
 
+// 파이어베이스 설정
+import 'package:firebase_core/firebase_core.dart';
+import 'package:calendar/firebase_options.dart';
+
 void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   await initializeDateFormatting();
 
   // 데이터베이스 생성
@@ -20,9 +28,10 @@ void main() async {
   final repository = ScheduleRepository();
   final scheduleProvider = ScheduleProvider(repository: repository);
 
-  runApp( //프로바이더로 하위 위젯들에 제공
+  runApp(
+    //프로바이더로 하위 위젯들에 제공
     ChangeNotifierProvider(
-        create: (_) => scheduleProvider,
+      create: (_) => scheduleProvider,
       child: MaterialApp(
         home: HomeScreen(),
       ),

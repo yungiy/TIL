@@ -51,6 +51,8 @@ dev_dependencies:
     sdk: flutter
   drift_dev: 2.1.0
   build_runner: 2.4.7 # 코드 생성 기능 제공 플러그인
+  firebase_core: 2.2.0 # 파이어베이스 코어 플러그인
+  cloud_firestore: 4.0.5 # 파이어 스토어 플러그인
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
