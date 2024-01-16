@@ -3,11 +3,17 @@ import 'package:calendar/component/schedule_bottom_sheet.dart';
 import 'package:calendar/component/schedule_card.dart';
 import 'package:calendar/component/today_banner.dart';
 import 'package:calendar/const/colors.dart';
-import 'package:calendar/provider/schedule_provider.dart';
+import 'package:calendar/database/drift_database.dart';
+import 'package:calendar/model/schedule_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   DateTime selectedDate = DateTime.utc(
     DateTime.now().year,
     DateTime.now().month,
@@ -16,15 +22,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 프로바이더 변경이 있을 때마다 build() 함수 재설정
-    final provider = context.watch<ScheduleProvider>();
-
-    // 선택된 날짜 가져오기
-    final selectedDate = provider.selectedDate;
-
-    // 선택된 날짜에 해다외는 일정들 가져오기
-    final schedules = provider.cache[selectedDate] ?? [];
-
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: PRIMARY_COLOR,
@@ -42,7 +39,7 @@ class HomeScreen extends StatelessWidget {
             isScrollControlled: true,
           );
         },
-        child: Icon(
+        child: const Icon(
           Icons.add,
         ),
       ),
@@ -51,38 +48,75 @@ class HomeScreen extends StatelessWidget {
           children: [
             MainCalendar(
               selectedDate: selectedDate, // 선택된 날짜 전달하기
-              onDaySelected: onDaySelected, // 날짜가 선택됐을 때
+              onDaySelected: (selectedDate, focusedDate) => {
+                onDaySelected(selectedDate, focusedDate, context),
+              }, // 날짜가 선택됐을 때
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TodayBanner(
               selectedDate: selectedDate,
-              count: schedules.length,
+              count: 0,
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Expanded(
-              child: ListView.builder(
-                  itemCount: schedules.length,
-                  itemBuilder: (context, index) {
-                    final schedule = schedules[index];
-
-                    return Dismissible(
-                      key: ObjectKey(schedule.id),
-                      direction: DismissDirection.endToStart,
-                      onDismissed: (DismissDirection direction) {
-                        provider.deleteSchedule(
-                            date: selectedDate, id: schedule.id);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 8.0, left: 8.0, right: 8.0),
-                        child: ScheduleCard(
-                          startTime: schedule.startTime,
-                          endTime: schedule.endTime,
-                          content: schedule.content,
-                        ),
-                      ),
+              child: StreamBuilder<QuerySnapshot>(
+                //파이어베이스로부터 일정 받아오기
+                stream: FirebaseFirestore.instance
+                    .collection(
+                      'schedule',
+                    )
+                    .where(
+                      'date',
+                      isEqualTo:
+                          '${selectedDate.year}${selectedDate.month}${selectedDate.day}',
+                    )
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  // stream을 가져오는 동안 에러가 났을 때 보여줄 화면
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text('일정 정보를 가져오지 못했습니다.'),
                     );
-                  }),
+                  }
+                  // 로딩 중일 때 보여줄 화면
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container();
+                  }
+                  final schedules = snapshot.data!.docs
+                      .map(
+                        (QueryDocumentSnapshot e) => ScheduleModel.fromJson(
+                            json: (e.data() as Map<String, dynamic>)),
+                      )
+                      .toList();
+
+                  return ListView.builder(
+                    itemCount: schedules.length,
+                    itemBuilder: (context, index) {
+                      final schedule = schedules[index];
+
+                      return Dismissible(
+                        key: ObjectKey(schedule.id),
+                        direction: DismissDirection.startToEnd,
+                        onDismissed: (DismissDirection direction) {
+                          FirebaseFirestore.instance
+                              .collection('schedule')
+                              .doc(schedule.id)
+                              .delete();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 8.0, left: 8.0, right: 8.0),
+                          child: ScheduleCard(
+                            startTime: schedule.startTime,
+                            endTime: schedule.endTime,
+                            content: schedule.content,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -90,5 +124,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void onDaySelected(DateTime selectedDate, DateTime focusedDate) {}
+  void onDaySelected(
+      DateTime selectedDate, DateTime focusedDate, BuildContext context) {
+    setState(() {
+      this.selectedDate = selectedDate;
+    });
+  }
 }

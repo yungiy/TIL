@@ -33,10 +33,10 @@ class ScheduleCard extends StatelessWidget {
             children: [
               // 시작 종료시간 위젯
               _Time(startTime: startTime, endTime: endTime),
-              SizedBox(width: 16.0),
+              const SizedBox(width: 16.0),
               // 일정 내용 위젯
               _Content(content: content),
-              SizedBox(width: 16.0),
+              const SizedBox(width: 16.0),
             ],
           ),
         ),

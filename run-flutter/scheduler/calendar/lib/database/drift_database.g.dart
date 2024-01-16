@@ -198,10 +198,11 @@ class $SchedulesTable extends Schedules
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+    'id', aliasedName, false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    // defaultConstraints: 'PRIMARY KEY AUTOINCREMENT',
+  );
   final VerificationMeta _contentMeta = const VerificationMeta('content');
   @override
   late final GeneratedColumn<String> content = GeneratedColumn<String>(
