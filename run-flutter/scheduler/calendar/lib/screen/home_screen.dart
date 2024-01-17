@@ -1,12 +1,11 @@
+import 'package:calendar/model/schedule_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:calendar/component/main_calendar.dart';
-import 'package:calendar/component/schedule_bottom_sheet.dart';
 import 'package:calendar/component/schedule_card.dart';
 import 'package:calendar/component/today_banner.dart';
+import 'package:calendar/component/schedule_bottom_sheet.dart';
 import 'package:calendar/const/colors.dart';
-import 'package:calendar/database/drift_database.dart';
-import 'package:calendar/model/schedule_model.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   DateTime selectedDate = DateTime.utc(
+    // 선택된 날짜를 관리할 변수
     DateTime.now().year,
     DateTime.now().month,
     DateTime.now().day,
@@ -24,19 +24,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        // 새 일정 버튼
         backgroundColor: PRIMARY_COLOR,
         onPressed: () {
-          // 바텀 시트 열기
           showModalBottomSheet(
+            // BottomSheet 열기
             context: context,
-            // 배경 탭하면 바텀시트 닫기
-            isDismissible: true,
-            builder: (_) => ScheduleBottomSheet(
-              // 선택된 날짜 넘겨주기
-              selectedDate: selectedDate,
-            ),
-            // 바텀시트의 높이를 화면의 최대 높이로 정의
+            isDismissible: true, // 배경 탭했을 때 BottomSheet 닫기
             isScrollControlled: true,
+            builder: (_) => ScheduleBottomSheet(
+              selectedDate: selectedDate, // 선택된 날짜 (selectedDate) 넘겨주기
+            ),
           );
         },
         child: const Icon(
@@ -44,23 +42,43 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: SafeArea(
+        // 시스템 UI 피해서 UI 구현하기
         child: Column(
+          // 달력과 리스트를 세로로 배치
           children: [
             MainCalendar(
               selectedDate: selectedDate, // 선택된 날짜 전달하기
-              onDaySelected: (selectedDate, focusedDate) => {
-                onDaySelected(selectedDate, focusedDate, context),
-              }, // 날짜가 선택됐을 때
+
+              // 날짜가 선택됐을 때 실행할 함수
+              onDaySelected: (selectedDate, focusedDate) =>
+                  onDaySelected(selectedDate, focusedDate, context),
             ),
             const SizedBox(height: 8.0),
-            TodayBanner(
-              selectedDate: selectedDate,
-              count: 0,
+            StreamBuilder<QuerySnapshot>(
+              // ListView에 적용했던 같은 쿼리
+              stream: FirebaseFirestore.instance
+                  .collection(
+                    'schedule',
+                  )
+                  .where(
+                    'date',
+                    isEqualTo:
+                        '${selectedDate.year}${selectedDate.month}${selectedDate.day}',
+                  )
+                  .snapshots(),
+              builder: (context, snapshot) {
+                return TodayBanner(
+                  selectedDate: selectedDate,
+
+                  // 개수 가져오기
+                  count: snapshot.data?.docs.length ?? 0,
+                );
+              },
             ),
             const SizedBox(height: 8.0),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                //파이어베이스로부터 일정 받아오기
+                // 파이어스토어로부터 일정 정보 받아오기
                 stream: FirebaseFirestore.instance
                     .collection(
                       'schedule',
@@ -72,16 +90,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                     .snapshots(),
                 builder: (context, snapshot) {
-                  // stream을 가져오는 동안 에러가 났을 때 보여줄 화면
+                  // Stream을 가져오는 동안 에러가 났을 때 보여줄 화면
                   if (snapshot.hasError) {
                     return const Center(
                       child: Text('일정 정보를 가져오지 못했습니다.'),
                     );
                   }
+
                   // 로딩 중일 때 보여줄 화면
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Container();
                   }
+
+                  // ScheduleModel로 데이터 매핑하기
                   final schedules = snapshot.data!.docs
                       .map(
                         (QueryDocumentSnapshot e) => ScheduleModel.fromJson(
@@ -125,7 +146,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void onDaySelected(
-      DateTime selectedDate, DateTime focusedDate, BuildContext context) {
+    DateTime selectedDate,
+    DateTime focusedDate,
+    BuildContext context,
+  ) {
     setState(() {
       this.selectedDate = selectedDate;
     });

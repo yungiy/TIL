@@ -1,5 +1,5 @@
 name: calendar
-description: "일정관리 앱"
+description: "일정관리 어플리케이션"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: '>=3.2.4 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -45,21 +45,21 @@ dependencies:
   dio: ^5.4.0 #네트워크 요청 관련 플러그인
   provider: ^6.1.1 # 상태관리 가능 플러그인
   uuid: ^4.3.3 # uuid 생성 플러그인
+  cloud_firestore: ^4.14.0
+  firebase_core: ^2.24.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  drift_dev: ^2.14.1
-  build_runner: ^2.4.8 # 코드 생성 기능 제공 플러그인
-  firebase_core: ^2.24.2 # 파이어베이스 코어 플러그인
-  cloud_firestore: ^4.14.0 # 파이어 스토어 플러그인
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^2.0.0
+  drift_dev: ^2.14.1
+  build_runner: ^2.4.8 # 코드 생성 기능 제공 플러그인
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

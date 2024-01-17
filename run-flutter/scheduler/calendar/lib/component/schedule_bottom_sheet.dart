@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:calendar/component/custom_text_field.dart';
+import 'package:calendar/component/costom_text_field.dart';
 import 'package:calendar/const/colors.dart';
 import 'package:calendar/model/schedule_model.dart';
 import 'package:uuid/uuid.dart';
@@ -10,8 +10,8 @@ class ScheduleBottomSheet extends StatefulWidget {
 
   const ScheduleBottomSheet({
     required this.selectedDate,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ScheduleBottomSheet> createState() => _ScheduleBottomSheetState();
@@ -72,7 +72,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
                     ),
                   ],
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Expanded(
                   child: CustomTextField(
                     // 내용 입력 필드

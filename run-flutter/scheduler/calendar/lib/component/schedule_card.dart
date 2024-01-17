@@ -8,10 +8,10 @@ class ScheduleCard extends StatelessWidget {
   final String content;
 
   const ScheduleCard({
-    Key? key,
     required this.startTime,
     required this.endTime,
     required this.content,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -32,7 +32,10 @@ class ScheduleCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // 시작 종료시간 위젯
-              _Time(startTime: startTime, endTime: endTime),
+              _Time(
+                startTime: startTime,
+                endTime: endTime,
+              ),
               const SizedBox(width: 16.0),
               // 일정 내용 위젯
               _Content(content: content),
@@ -47,12 +50,12 @@ class ScheduleCard extends StatelessWidget {
 
 class _Time extends StatelessWidget {
   final int startTime;
-  final endTime;
+  final int endTime;
 
   const _Time({
-    Key? key,
     required this.startTime,
     required this.endTime,
+    Key? key,
   }) : super(key: key);
 
   @override

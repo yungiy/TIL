@@ -25,7 +25,7 @@ class MainCalendar extends StatelessWidget {
       firstDay: DateTime(1800, 1, 1),
       lastDay: DateTime(3000, 1, 1),
       focusedDay: DateTime.now(),
-      headerStyle: HeaderStyle(
+      headerStyle: const HeaderStyle(
         // 달력 최상단 스타일
         titleCentered: true,
         formatButtonVisible: false, // 달력 크기 선택 옵션 없애기

@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBjtb1587PYWpaNg0t4Z-2d1sRiyDRYHQ4</string>
+	<string>AIzaSyCfvmyUU_pBvZiXGDqriJPlOObXqoJKWfU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>234790193126</string>
+	<string>439428576170</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.calendar</string>
 	<key>PROJECT_ID</key>
-	<string>flutter-testing-app-yung-c514c</string>
+	<string>flutter-app-test-df339</string>
 	<key>STORAGE_BUCKET</key>
-	<string>flutter-testing-app-yung-c514c.appspot.com</string>
+	<string>flutter-app-test-df339.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:234790193126:ios:942765c820c133fcc53827</string>
+	<string>1:439428576170:ios:112614eb15ad3205c1f1d3</string>
 </dict>
 </plist>

@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,20 +43,39 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDRU5guGqrccX9VW0aplIgPd_NidQYGNK4',
+    appId: '1:439428576170:web:444ece142a21e4ddc1f1d3',
+    messagingSenderId: '439428576170',
+    projectId: 'flutter-app-test-df339',
+    authDomain: 'flutter-app-test-df339.firebaseapp.com',
+    storageBucket: 'flutter-app-test-df339.appspot.com',
+    measurementId: 'G-N25MM98S15',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCq0M5qd2w-fDWFWZliEJMCxgb1mETQ3FM',
-    appId: '1:234790193126:android:1148f64483540dffc53827',
-    messagingSenderId: '234790193126',
-    projectId: 'flutter-testing-app-yung-c514c',
-    storageBucket: 'flutter-testing-app-yung-c514c.appspot.com',
+    apiKey: 'AIzaSyCZROr9q7IAIyLHOErzsxkWEZvQp-Ywpb0',
+    appId: '1:439428576170:android:1ddb3959ee716749c1f1d3',
+    messagingSenderId: '439428576170',
+    projectId: 'flutter-app-test-df339',
+    storageBucket: 'flutter-app-test-df339.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBjtb1587PYWpaNg0t4Z-2d1sRiyDRYHQ4',
-    appId: '1:234790193126:ios:942765c820c133fcc53827',
-    messagingSenderId: '234790193126',
-    projectId: 'flutter-testing-app-yung-c514c',
-    storageBucket: 'flutter-testing-app-yung-c514c.appspot.com',
+    apiKey: 'AIzaSyCfvmyUU_pBvZiXGDqriJPlOObXqoJKWfU',
+    appId: '1:439428576170:ios:112614eb15ad3205c1f1d3',
+    messagingSenderId: '439428576170',
+    projectId: 'flutter-app-test-df339',
+    storageBucket: 'flutter-app-test-df339.appspot.com',
     iosBundleId: 'com.example.calendar',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCfvmyUU_pBvZiXGDqriJPlOObXqoJKWfU',
+    appId: '1:439428576170:ios:800932f9e62be390c1f1d3',
+    messagingSenderId: '439428576170',
+    projectId: 'flutter-app-test-df339',
+    storageBucket: 'flutter-app-test-df339.appspot.com',
+    iosBundleId: 'com.example.calendar.RunnerTests',
   );
 }
