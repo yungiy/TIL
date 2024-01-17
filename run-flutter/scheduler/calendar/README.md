@@ -18,7 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 ## 실행
 
 |홈화면|
-|---|
+|:---:|
 |<img src="Simulator Screenshot - iPhone 14 Pro Max - 2024-01-17 at 18.12.49.png"  width="360" height="640"/>|
 |다른 날짜에 등록된 테스크|
 |<img src="Simulator Screenshot - iPhone 14 Pro Max - 2024-01-17 at 18.12.57.png"  width="360" height="640"/>|
