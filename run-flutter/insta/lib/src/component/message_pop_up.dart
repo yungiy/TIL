@@ -32,14 +32,14 @@ class MessagePopup extends StatelessWidget {
                 children: [
                   Text(
                     title!,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
                         color: Colors.black),
                   ),
                   Text(
                     message!,
-                    style: TextStyle(fontSize: 14, color: Colors.black),
+                    style: const TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   const SizedBox(height: 7),
                   Row(
@@ -47,7 +47,7 @@ class MessagePopup extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: okCallback,
-                        child: Text('확인'),
+                        child: const Text('확인'),
                       ),
                       const SizedBox(width: 10),
                       ElevatedButton(

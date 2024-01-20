@@ -16,7 +16,7 @@ class AvatarWidget extends StatelessWidget {
     required this.thumbPath,
     this.hasStory,
     this.nickname,
-    this.size = 65,
+    this.size = 80,
   }) : super(key: key);
 
   @override
@@ -27,7 +27,7 @@ class AvatarWidget extends StatelessWidget {
       case AvatarType.TYPE2:
         return type2Widget();
       case AvatarType.TYPE3:
-        return Container();
+        return type3Widget();
     }
   }
 
@@ -68,6 +68,15 @@ class AvatarWidget extends StatelessWidget {
     );
   }
 
-  // Widget type3Widget() {}
-  // 14분 01초
+  Widget type3Widget() {
+    return Row(
+      children: [
+        type2Widget(),
+        Text(
+          nickname ?? '',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        )
+      ],
+    );
+  }
 }

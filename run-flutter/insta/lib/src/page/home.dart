@@ -8,7 +8,10 @@ class Home extends StatelessWidget {
 
   Widget _popList() {
     return Column(
-      children: List.generate(50, (index) => const PostWidget()),
+      children: List.generate(
+        50,
+        (index) => const PostWidget(),
+      ).toList(),
     );
   }
 
@@ -19,23 +22,24 @@ class Home extends StatelessWidget {
           type: AvatarType.TYPE2,
           thumbPath:
               'https://cdn.pixabay.com/photo/2013/11/28/10/36/road-220058_1280.jpg',
-          size: 70,
+          size: 80,
         ),
         Positioned(
           right: 0,
           bottom: 0,
           child: Container(
-            width: 25,
-            height: 25,
+            width: 30,
+            height: 35,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.blue,
-              border: Border.all(color: Colors.white, width: 2),
+              border: Border.all(color: Colors.white, width: 3),
             ),
             child: const Center(
               child: Text(
                 '+',
-                style: TextStyle(fontSize: 20, color: Colors.white, height: 1),
+                style:
+                    TextStyle(fontSize: 25, color: Colors.white, height: 0.7),
               ),
             ),
           ),
@@ -50,7 +54,7 @@ class Home extends StatelessWidget {
       child: Row(children: [
         const SizedBox(width: 20),
         _myStory(),
-        const SizedBox(width: 5),
+        const SizedBox(width: 10),
         ...List.generate(
           100,
           (index) => AvatarWidget(
@@ -67,13 +71,13 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
-        title: ImageData(IconsPath.logo, width: 270),
+        title: ImageData(IconsPath.logo, width: 500),
         actions: [
           GestureDetector(
             onTap: () {},
             child: Padding(
               padding: const EdgeInsets.all(15.0),
-              child: ImageData(IconsPath.directMessage, width: 50),
+              child: ImageData(IconsPath.directMessage, width: 100),
             ),
           ),
         ],
