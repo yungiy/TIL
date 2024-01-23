@@ -1,9 +1,16 @@
-import React from 'react'
+import { Container, Grid, Typography } from '@mui/material';
+import React from 'react';
+import Header from '../component/Header';
 
-type Props = {}
-
-export default function Home({}: Props) {
+export default function Home() {
   return (
-    <div>Home</div>
+  <Container>
+    <Header/>
+      <Grid xs={12} marginTop='50px' display='flex' justifyContent='center'>
+        <Typography variant='h1'>
+          Home
+        </Typography>
+      </Grid>
+  </Container>
   )
 }

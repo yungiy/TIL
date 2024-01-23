@@ -1,6 +1,11 @@
-import { Box, Button, Container, CssBaseline, Grid, Link, TextField, Typography } from '@mui/material';
 import React from 'react';
-import { TypeOf, object, string } from 'zod';
+import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
+import { FormProvider, useForm } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { object, string } from 'zod';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; 
 
 const signupSchema = object({
   name: string().min(1, '이름은 필수입니다.').max(70),
@@ -15,84 +20,101 @@ const signupSchema = object({
   message: '비밀번호가 일치하지 않습니다.',
 });
 
-type ISignUp = TypeOf<typeof signupSchema>;
+type ISignUp = {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+};
 
 export default function SignUp() {
+  const methods = useForm<ISignUp>({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const navigate = useNavigate();
+
+  const onSubmitHandler: SubmitHandler<ISignUp> = async (values) => {
+    try {
+      const auth = getAuth(); 
+      const { user } = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      
+      console.log('회원가입 성공:', user);
+      navigate('/login');
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+    }
+  };
+
 
   return (
-      <Container component="main" maxWidth="xs" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            회원가입
-          </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }}>
+    <Container component="main" maxWidth="xs" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Grid
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          회원가입
+        </Typography>
+        <FormProvider {...methods}>
+          <Box component="form" onSubmit={methods.handleSubmit(onSubmitHandler)} noValidate sx={{ mt: 3 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} >
-                <TextField
-                  required
-                  fullWidth
-                  id="fullName"
-                  label="Full Name"
-                  name="fullName"
-                />
+              <Grid item xs={12}>
+                <TextField required fullWidth id="name" label="Full Name"  {...methods.register('name')} />
+                {methods.formState.errors.name && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.name.message}
+                  </Typography>
+                )}
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
+                <TextField required fullWidth id="email" label="Email Address" autoComplete="email" {...methods.register('email')} />
+                {methods.formState.errors.email && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.email.message}
+                  </Typography>
+                )}
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                />
+                <TextField required fullWidth label="Password" type="password" id="password" {...methods.register('password')} />
+                {methods.formState.errors.password && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.password.message}
+                  </Typography>
+                )}
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="PassworConfirm"
-                  type="password"
-                  id="passwordconfirm"
-                />
+                <TextField required fullWidth  label="Password Confirm" type="password" id="passwordConfirm" {...methods.register('passwordConfirm')} />
+                {methods.formState.errors.passwordConfirm && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.passwordConfirm.message}
+                  </Typography>
+                )}
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="outlined"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="outlined" sx={{ mt: 3, mb: 2 }}>
               회원가입
             </Button>
             <Grid container justifyContent="flex-end">
-              <Grid item>
+              <Grid item xs>
                 <Link href="/login" variant="body2">
                   이미 계정이 있으세요? 로그인
                 </Link>
               </Grid>
+              <Grid item>
+                <Link href="/" variant="body2">
+                  홈으로 가기
+                </Link>
+              </Grid>
             </Grid>
           </Box>
-        </Grid>
-      </Container>
+        </FormProvider>
+      </Grid>
+    </Container>
   );
 }
