@@ -39,7 +39,6 @@ npm start
 |파이어베이스 콘솔에서 사용자 등록확인|
 |<img width="1285" alt="image" src="https://github.com/yungiy/TIL/assets/138196247/46e6fec7-6e04-4442-a0e6-e7d00f72cf2f">|
 |로그인|
-|<img width="1695" alt="image" src="https://github.com/yungiy/TIL/assets/138196247/81044e6e-d56b-410a-b114-917dcc613112">|
 |<img width="1695" alt="image" src="https://github.com/yungiy/TIL/assets/138196247/a1b9d07e-251a-4c3d-a3a3-139be869628b">|
 |<img width="1695" alt="image" src="https://github.com/yungiy/TIL/assets/138196247/a1b9d07e-251a-4c3d-a3a3-139be869628b">|
 |<img width="1695" alt="image" src="https://github.com/yungiy/TIL/assets/138196247/4673de36-6b0e-43d1-b9c5-fe4151e279e5">|
