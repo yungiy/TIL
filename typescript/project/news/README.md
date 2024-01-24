@@ -1,7 +1,7 @@
 ## World News
 * news api를 사용한 나라별 뉴스 뷰어 입니다.
 ## Vercel을 통한 배포 완료
-https://world-news-rouge.vercel.app
+* https://world-news-rouge.vercel.app</br>
 **주의! 제가 사용한 newsapi.org는 무료버전으로 로컬호스트에서만 작동합니다. 그래서 배포를 하면 426에러로 유료버전으로 업그레이드해야합니다. 배포 버전에서도 로그인 회원가입은 정상적으로 동작합니다.**
 
 ## 사용 스택
