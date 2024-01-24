@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form';
@@ -9,7 +8,7 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const signupSchema = object({
   name: string().min(1, '이름은 필수입니다.').max(70),
-  email: string().min(1, '이메일은 필수입니다.').email('이메일이 일치하지 않습니다.'),
+  email: string().min(1, '이메일은 필수입니다.').email('@가 포함되어야합니다'),
   password: string()
     .min(1, '비밀번호는 필수입니다.')
     .min(8, '비밀번호는 8자 이상이어야 합니다.')

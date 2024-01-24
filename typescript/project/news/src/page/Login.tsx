@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form';
@@ -10,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const loginSchema = object({
   email: string()
     .min(1, '이메일은 필수입니다.')
-    .email('일치하는 이메일이 없습니다.'),
+    .email('@가 포함되어야합니다.'),
   password: string()
     .min(1, '비밀번호는 필수입니다.')
     .min(8, '비밀번호는 8자 이상이어야 합니다.')

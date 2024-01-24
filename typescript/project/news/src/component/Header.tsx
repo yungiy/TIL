@@ -20,7 +20,7 @@ export default function Header() {
     try {
       await signOut(auth);
     } catch (error) {
-      console.error('로그아웃 에러:', error);
+      console.error('로그아웃 에러가 발생했습니다.', error);
     }
   };
 
@@ -29,15 +29,13 @@ export default function Header() {
       <Grid>
         <AppBar component={'nav'} sx={{ bgcolor: 'black' }}>
           <Toolbar>
-            <Typography color="white" variant="h5" component="div" sx={{ flexGrow: 2, fontFamily: 'Monospace', letterSpacing: 10 }}>
-              News
+            <Typography color="white" variant="h5" component="div" sx={{ fontFamily: 'Monospace', letterSpacing: 10 }}>
+              World News
             </Typography>
+            <Grid sx={{ flexGrow: 1 }} />
             <Grid sx={{ display: { xs: 'none', sm: 'block' } }}>
               <List
-                sx={{
-                  listStyle: 'none',
-                  display: 'flex',
-                }}
+                sx={{ listStyle: 'none', display: 'flex' }}
               >
                 {user ? (
                   <>
@@ -46,7 +44,7 @@ export default function Header() {
                     </ListItem>
                     <ListItem sx={{ margin: '0px 10px' }}>
                       <ListItemText
-                        primary="로그아웃"
+                        primary="Logout"
                         sx={{ textDecoration: 'none', color: 'white', cursor: 'pointer' }}
                         onClick={handleLogout}
                       />
