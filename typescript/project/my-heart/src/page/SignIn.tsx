@@ -32,7 +32,7 @@ export default function SignIn() {
   const methods = useForm<ISignUp>({
     resolver: zodResolver(signUpSchema),
   });
-  
+
   const navigate = useNavigate();
 
   const onSubmitHandler: SubmitHandler<ISignUp> = async (values) => {
@@ -54,90 +54,92 @@ export default function SignIn() {
 
   return (
     <>
-      <Header />
-      <Container
-        maxWidth="xs"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "90vh",
-        }}
-      >
-        <Grid
+      <Container>
+        <Header />
+        <Container
+          maxWidth="xs"
           sx={{
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
             justifyContent: "center",
+            alignItems: "center",
+            height: "90vh",
           }}
         >
-          <Typography variant="h5">로그인</Typography>
-          <FormProvider {...methods}>
-            <Box
-              component="form"
-              onSubmit={methods.handleSubmit(onSubmitHandler)}
-              noValidate
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                autoFocus
-                {...methods.register("email")}
-              />
-              {methods.formState.errors.email && (
-                <Typography variant="caption" color="error">
-                  {methods.formState.errors.email.message}
-                </Typography>
-              )}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                label="Password"
-                type="password"
-                id="password"
-                {...methods.register("password")}
-              />
-              {methods.formState.errors.password && (
-                <Typography variant="caption" color="error">
-                  {methods.formState.errors.password.message}
-                </Typography>
-              )}
-              <Button
-                type="submit"
-                fullWidth
-                variant="outlined"
-                sx={{ mt: 3, mb: 2 }}
+          <Grid
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="h5">로그인</Typography>
+            <FormProvider {...methods}>
+              <Box
+                component="form"
+                onSubmit={methods.handleSubmit(onSubmitHandler)}
+                noValidate
+                sx={{ mt: 1 }}
               >
-                로그인
-              </Button>
-              <Grid sx={{ mt: 1, flexDirection: "column", display: "flex" }}>
-                <Button variant="outlined" sx={{ marginBottom: "20px" }}>
-                  카카오 로그인
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  autoFocus
+                  {...methods.register("email")}
+                />
+                {methods.formState.errors.email && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.email.message}
+                  </Typography>
+                )}
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  id="password"
+                  {...methods.register("password")}
+                />
+                {methods.formState.errors.password && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.password.message}
+                  </Typography>
+                )}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="outlined"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  로그인
                 </Button>
-                <Button sx={{ marginBottom: "20px" }}>구글 로그인</Button>
-                <Button sx={{ marginBottom: "20px" }}>네이버 로그인</Button>
-              </Grid>
-              <Grid container justifyContent="flex-end">
-                <Grid item xs>
-                  <Link href="/signup" variant="body2">
-                    회원가입
-                  </Link>
+                <Grid sx={{ mt: 1, flexDirection: "column", display: "flex" }}>
+                  <Button variant="outlined" sx={{ marginBottom: "20px" }}>
+                    카카오 로그인
+                  </Button>
+                  <Button sx={{ marginBottom: "20px" }}>구글 로그인</Button>
+                  <Button sx={{ marginBottom: "20px" }}>네이버 로그인</Button>
                 </Grid>
-                <Grid item>
-                  <Link href="/" variant="body2">
-                    홈으로 가기
-                  </Link>
+                <Grid container justifyContent="flex-end">
+                  <Grid item xs>
+                    <Link href="/signup" variant="body2">
+                      회원가입
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="/" variant="body2">
+                      홈으로 가기
+                    </Link>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Box>
-          </FormProvider>
-        </Grid>
+              </Box>
+            </FormProvider>
+          </Grid>
+        </Container>
       </Container>
     </>
   );

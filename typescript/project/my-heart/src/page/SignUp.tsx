@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { object, string } from "zod";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import Header from "../components/Header";
 
 const signupSchema = object({
@@ -45,12 +46,18 @@ export default function SignUp() {
   const onSubmitHandler: SubmitHandler<ISignUp> = async (values) => {
     try {
       const auth = getAuth();
+
+      // Firebase Authentication을 통해 사용자 등록
       const { user } = await createUserWithEmailAndPassword(
         auth,
         values.email,
         values.password
       );
 
+      // 사용자 등록 후 Firestore에 사용자 정보 저장
+      await saveUserInfoToFirestore(user.uid, values.name, values.email, values.password) ;
+
+      // 사용자 등록 후 추가적인 동작 수행 가능
       console.log("회원가입 성공:", user);
       navigate("/login");
     } catch (error) {
@@ -58,115 +65,134 @@ export default function SignUp() {
     }
   };
 
+  const saveUserInfoToFirestore = async (
+    userId: any,
+    name: any,
+    email: any,
+    password: any
+  ) => {
+    const userDocRef = doc(getFirestore(), "users", userId);
+
+    // Firestore에 사용자 정보 저장
+    await setDoc(userDocRef, {
+      name: name,
+      email: email,
+      password: password,
+    });
+
+    console.log("사용자 정보 Firestore에 저장 완료");
+  };
+
   return (
     <>
-      <Header />
-      <Container
-        component="main"
-        maxWidth="xs"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "90vh",
-        }}
-      >
-        <Grid
+      <Container>
+        <Header />
+        <Container
+          maxWidth="xs"
           sx={{
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
             justifyContent: "center",
+            alignItems: "center",
+            height: "90vh",
           }}
         >
-          <Typography component="h1" variant="h5">
-            회원가입
-          </Typography>
-          <FormProvider {...methods}>
-            <Box
-              component="form"
-              onSubmit={methods.handleSubmit(onSubmitHandler)}
-              noValidate
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="Full Name"
-                {...methods.register("name")}
-              />
-              {methods.formState.errors.name && (
-                <Typography variant="caption" color="error">
-                  {methods.formState.errors.name.message}
-                </Typography>
-              )}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                autoComplete="email"
-                {...methods.register("email")}
-              />
-              {methods.formState.errors.email && (
-                <Typography variant="caption" color="error">
-                  {methods.formState.errors.email.message}
-                </Typography>
-              )}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                label="Password"
-                type="password"
-                id="password"
-                {...methods.register("password")}
-              />
-              {methods.formState.errors.password && (
-                <Typography variant="caption" color="error">
-                  {methods.formState.errors.password.message}
-                </Typography>
-              )}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                label="Password Confirm"
-                type="password"
-                id="passwordConfirm"
-                {...methods.register("passwordConfirm")}
-              />
-              {methods.formState.errors.passwordConfirm && (
-                <Typography variant="caption" color="error">
-                  {methods.formState.errors.passwordConfirm.message}
-                </Typography>
-              )}
-              <Button
-                type="submit"
-                fullWidth
-                variant="outlined"
-                sx={{ mt: 3, mb: 2 }}
+          <Grid
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography component="h1" variant="h5">
+              회원가입
+            </Typography>
+            <FormProvider {...methods}>
+              <Box
+                component="form"
+                onSubmit={methods.handleSubmit(onSubmitHandler)}
+                noValidate
+                sx={{ mt: 1 }}
               >
-                회원가입
-              </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item xs>
-                  <Link href="/signin" variant="body2">
-                    이미 계정이 있으세요? 로그인
-                  </Link>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Full Name"
+                  {...methods.register("name")}
+                />
+                {methods.formState.errors.name && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.name.message}
+                  </Typography>
+                )}
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  autoComplete="email"
+                  {...methods.register("email")}
+                />
+                {methods.formState.errors.email && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.email.message}
+                  </Typography>
+                )}
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  id="password"
+                  {...methods.register("password")}
+                />
+                {methods.formState.errors.password && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.password.message}
+                  </Typography>
+                )}
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  label="Password Confirm"
+                  type="password"
+                  id="passwordConfirm"
+                  {...methods.register("passwordConfirm")}
+                />
+                {methods.formState.errors.passwordConfirm && (
+                  <Typography variant="caption" color="error">
+                    {methods.formState.errors.passwordConfirm.message}
+                  </Typography>
+                )}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="outlined"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  회원가입
+                </Button>
+                <Grid container justifyContent="flex-end">
+                  <Grid item xs>
+                    <Link href="/signin" variant="body2">
+                      이미 계정이 있으세요? 로그인
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="/" variant="body2">
+                      홈으로 가기
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link href="/" variant="body2">
-                    홈으로 가기
-                  </Link>
-                </Grid>
-              </Grid>
-            </Box>
-          </FormProvider>
-        </Grid>
+              </Box>
+            </FormProvider>
+          </Grid>
+        </Container>
       </Container>
     </>
   );
