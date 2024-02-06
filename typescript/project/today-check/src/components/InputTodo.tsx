@@ -1,43 +1,41 @@
 import { Button, Grid, TextField } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateField } from "@mui/x-date-pickers/DateField";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import "dayjs/locale/ko";
-import React from "react";
+import React, { useState } from "react";
+import { useTodosDispatch } from './hook/useTodoContext';
 
-type Props = {}
+export default function InputTodo() {
+  const [task, setTask] = useState("");
+  const dispatch = useTodosDispatch();
 
-export default function InputTodo({}: Props) {
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // 빈 배열을 리턴할 때
+    if (!task.trim()) {
+      window.alert("내용을 입력해주세요");
+      return;
+    }
+
+    dispatch({
+      type: 'CREATE',
+      text: task
+    });
+    setTask('');
+  };
+  
   return (
-    <Grid container xs={12}>
-      <Grid item xs={12}>
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-          <DemoContainer components={["startDay", "endDay"]}>
-            <Grid xs={6}>
-              <DateField
-                label="시작일을 입력해주세요."
-                fullWidth
-                format="YYYY-MM-DD"
-                variant='filled'
-                InputProps={{ disableUnderline: true }}
-              />
-            </Grid>
-            <Grid xs={6}>
-              <DateField
-                label="종료일을 입력해주세요."
-                fullWidth
-                format="YYYY-MM-DD"
-                variant='filled'
-                InputProps={{ disableUnderline: true }}
-              />
-            </Grid>
-          </DemoContainer>
-        </LocalizationProvider>
-      </Grid>
+    <Grid container xs={12} component="form" onSubmit={onSubmit} >
       <Grid item xs={12} display="flex" direction="row">
-        <TextField fullWidth placeholder='할 일을 추가해주세요' multiline rows={4} variant="filled" InputProps={{ disableUnderline: true }}/>
-        <Button variant="outlined" sx={{ ml: 1, mb: 1 }}>
+        <TextField
+          fullWidth
+          placeholder="할 일을 추가해주세요"
+          multiline
+          rows={5}
+          value={task}
+          variant="filled"
+          InputProps={{ disableUnderline: true }}
+          onChange={(e) => setTask(e.target.value)}
+        />
+        <Button variant="outlined" sx={{ ml: 1 }} onClick={onSubmit}>
           추가
         </Button>
       </Grid>

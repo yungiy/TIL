@@ -1,19 +1,16 @@
 import React from "react";
 import Header from "../components/Header";
 import { Container, Grid, Paper } from "@mui/material";
-import MyCalendarForm from "../components/MyCalendarFrom";
-import InputTodo from '../components/InputTodo';
-import MyFriend from '../components/MyFriend';
-import Todo from '../components/Todo';
-import FindFriend from '../components/FindFriend';
+import InputTodo from "../components/InputTodo";
+import Todo from "../components/Todo";
 
 export default function Home() {
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth="sm">
         <Header />
-        <Grid container spacing={1} xs={12}>
-          <Grid item xs={3}>
+        <Grid container spacing={1} display='flex' direction='column'>
+          <Grid item xs={6}>
             <Paper
               variant="outlined"
               square={false}
@@ -23,59 +20,20 @@ export default function Home() {
                 height: 400,
               }}
             >
-              <FindFriend/>
+              <Todo />
             </Paper>
           </Grid>
-          <Grid item xs={5}>
-            <Paper
-              variant="outlined"
-              square={false}
-              sx={{
-                p: 1,
-                display: "flex",
-                height: 400,
-              }}
-            >
-              <Todo/>
-            </Paper>
-          </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Paper
               square={false}
               variant="outlined"
               sx={{
                 p: 1,
                 display: "flex",
-                height: 400,
+                height: 150,
               }}
             >
-              <MyCalendarForm />
-            </Paper>
-          </Grid>
-          <Grid item xs={3}>
-            <Paper
-              square={false}
-              variant="outlined"
-              sx={{
-                p: 1,
-                display: "flex",
-                height: 200,
-              }}
-            >
-              <MyFriend/>
-            </Paper>
-          </Grid>
-          <Grid item xs={9}>
-            <Paper
-              square={false}
-              variant="outlined"
-              sx={{
-                p: 1,
-                display: "flex",
-                height: 200,
-              }}
-            >
-              <InputTodo/>
+              <InputTodo />
             </Paper>
           </Grid>
         </Grid>
