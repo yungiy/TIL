@@ -16,7 +16,6 @@ export default async (prevState: any, formData: FormData) => {
   if (!formData.get('image')) {
     return { message: 'no_image' };
   }
-  formData.set('nickname', formData.get('name') as string);
   let shouldRedirect = false;
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`, {
@@ -37,11 +36,10 @@ export default async (prevState: any, formData: FormData) => {
     })
   } catch (err) {
     console.error(err);
-    return { message: null };
+    return;
   }
 
   if (shouldRedirect) {
     redirect('/home'); // try/catch문 안에서 X
   }
-  return { message: null };
 }

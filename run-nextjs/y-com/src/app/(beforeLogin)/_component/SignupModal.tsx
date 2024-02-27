@@ -5,21 +5,20 @@ import onSubmit from '../_lib/signup';
 import BackButton from "@/app/(beforeLogin)/_component/BackButton";
 import { useFormState, useFormStatus } from 'react-dom';
 
-function showMessage(message: string | null) {
-  console.log('message', message);
-  if (message === 'no_id') {
+function showMessage(messasge: string) {
+  if (messasge === 'no_id') {
     return '아이디를 입력하세요.';
   }
-  if (message === 'no_name') {
+  if (messasge === 'no_name') {
     return '닉네임을 입력하세요.';
   }
-  if (message === 'no_password') {
+  if (messasge === 'no_password') {
     return '비밀번호를 입력하세요.';
   }
-  if (message === 'no_image') {
+  if (messasge === 'no_image') {
     return '이미지를 업로드하세요.';
   }
-  if (message === 'user_exists') {
+  if (messasge === 'user_exists') {
     return '이미 사용 중인 아이디입니다.';
   }
   return '';
@@ -28,7 +27,6 @@ function showMessage(message: string | null) {
 export default function SignupModal() {
   const [state, formAction] = useFormState(onSubmit, { message: null });
   const { pending } = useFormStatus();
-  console.log('state', state);
 
   return (
     <>

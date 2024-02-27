@@ -17,7 +17,7 @@ export default function ChatRoom() {
     image: faker.image.avatar(),
   }
   const messages = [
-    {messageId: 1, roomId: 123, id: 'yungiy',  content: '안녕하세요.', createdAt: new Date()},
+    {messageId: 1, roomId: 123, id: 'zerohch0',  content: '안녕하세요.', createdAt: new Date()},
     {messageId: 2, roomId: 123, id: 'hero', content: '안녕히가세요.', createdAt: new Date()},
   ]
 
@@ -34,7 +34,7 @@ export default function ChatRoom() {
       </Link>
       <div className={style.list}>
         {messages.map((m) => {
-          if (m.id === 'yungiy') { // 내 메시지면
+          if (m.id === 'zerohch0') { // 내 메시지면
             return (
               <div
                 key={m.messageId}
