@@ -1,4 +1,4 @@
-import styles from "@/app/(beforeLogin)/_component/main.module.css";
+import * as styles from "@/app/(beforeLogin)/_component/main.css";
 import Image from "next/image";
 import YLogo from "../../../../public/ylogo.png";
 import Link from "next/link";

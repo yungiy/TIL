@@ -1,8 +1,8 @@
 "use client";
 
-import style from '@/app/(beforeLogin)/_component/login.module.css';
+import * as style from '@/app/(beforeLogin)/_component/login.css';
 import {ChangeEventHandler, FormEventHandler, useState} from "react";
-import {redirect, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 import {signIn} from "next-auth/react";
 
 export default function LoginModal() {
@@ -15,12 +15,16 @@ export default function LoginModal() {
     e.preventDefault();
     setMessage('');
     try {
-      await signIn("credentials", {
+      const response = await signIn("credentials", {
         username: id,
         password,
         redirect: false,
       })
-      router.replace('/home');
+      if (!response?.ok) {
+        setMessage('아이디와 비밀번호가 일치하지 않습니다.');
+      } else {
+        router.replace('/home');
+      }
     } catch (err) {
       console.error(err);
       setMessage('아이디와 비밀번호가 일치하지 않습니다.');
