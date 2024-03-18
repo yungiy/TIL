@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import AddTask from './components/AddTask';
-import TodoList from './components/TodoList';
+import AddTask from '../components/AddTask';
+import TodoList from '../components/TodoList';
 import { getAllTodos } from '../../api';
 
 export default async function Home() {

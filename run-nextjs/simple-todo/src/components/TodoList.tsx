@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITask } from '../../../types/tasks';
+import { ITask } from '../types/tasks';
 import Task from './Task';
 
 interface TodoListProps {

@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: '오늘 할 일',
-  description: 'nextjs 13으로 만든 투두리스트',
+  description: 'nextjs 14로 만든 투두리스트',
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='ko'>
       <body className={inter.className}>{children}</body>
     </html>
   );

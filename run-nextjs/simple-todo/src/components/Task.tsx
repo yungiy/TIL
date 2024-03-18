@@ -1,12 +1,12 @@
 'use client';
 
 import { FormEventHandler, useState } from 'react';
-import { ITask } from '../../../types/tasks';
+import { ITask } from '../types/tasks';
 import { FiEdit } from 'react-icons/fi';
 import { FiTrash } from 'react-icons/fi';
 import Modal from './Modal';
 import { useRouter } from 'next/navigation';
-import { eidtTodo, deleteTodo } from '../../../api';
+import { eidtTodo, deleteTodo } from '../../api';
 
 interface TaskProps {
   task: ITask;
