@@ -1,7 +1,5 @@
 import prisma from '@/lib/db';
 import dayjs from 'dayjs';
-import { MdDelete } from 'react-icons/md';
-import { MdEdit } from 'react-icons/md';
 import 'dayjs/locale/ko';
 
 interface CommentsProps {
@@ -36,12 +34,6 @@ export default async function Comments({ postId }: CommentsProps) {
                     .locale('ko')
                     .format('YYYY-MM-DD ddd HH:mm:ss')}
                 </div>
-                <button className='mr-2'>
-                  <MdDelete size={20} />
-                </button>
-                <button className='mr-2'>
-                  <MdEdit size={20} />
-                </button>
               </div>
               <p>{comment.text}</p>
             </li>
