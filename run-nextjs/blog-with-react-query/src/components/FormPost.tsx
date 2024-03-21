@@ -1,15 +1,30 @@
 'use client';
+
 import { FormInputPost } from '@/types/FormPost';
+import { Tag } from '@prisma/client';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface FormPostProps {
   submit: SubmitHandler<FormInputPost>;
-  isEditing: boolean
+  isEditing: boolean;
 }
 
 export default function FormPost({ submit, isEditing }: FormPostProps) {
   const { register, handleSubmit } = useForm<FormInputPost>();
+
+  // 태그 가져오기
+  const { data: dataTags, isLoading: isLoadingTags } = useQuery<Tag[]>({
+    queryKey: ['tags'],
+    queryFn: async () => {
+      const response = await axios.get('/api/tags');
+      return response.data;
+    },
+  });
+
+  console.log(dataTags);
 
   return (
     <form
@@ -28,21 +43,27 @@ export default function FormPost({ submit, isEditing }: FormPostProps) {
         placeholder='내용을 입력해주세요'
       ></textarea>
 
-      <select
-        {...register('tag', { required: true })}
-        className='select select-bordered w-full max-w-lg'
-        defaultValue={''}
-      >
-        <option disabled selected>
-          분야를 선택해주세요.
-        </option>
-        <option>서버</option>
-        <option>데이터베이스</option>
-        <option>프론트</option>
-        <option>AI</option>
-      </select>
+      {isLoadingTags ? (
+        <span className="loading loading-infinity loading-lg"></span>
+      ) : (
+        <select
+          {...register('tag', { required: true })}
+          className='select select-bordered w-full max-w-lg'
+          defaultValue={''}
+        >
+          <option disabled value=''>
+            분야를 선택하세요
+          </option>
+          {dataTags?.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      )}
+
       <button type='submit' className='btn w-full max-w-lg'>
-      {isEditing ? '업로드' : '수정'}
+        {isEditing ? '업로드' : '수정'}
       </button>
     </form>
   );
