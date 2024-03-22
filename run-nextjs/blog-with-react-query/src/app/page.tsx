@@ -17,12 +17,13 @@ async function getPosts() {
 
 export default async function Home() {
   const posts = await getPosts();
+  console.log(posts);
 
   return (
     <main className='grid items-center gap-4 mt-5'>
-      {/* {posts.map((post) => (
+      {posts.map((post) => (
         <PostCard key={post.id} post={post} />
-      ))} */}
+      ))}
     </main>
   );
 }

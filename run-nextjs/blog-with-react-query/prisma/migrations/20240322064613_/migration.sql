@@ -9,7 +9,7 @@ CREATE TABLE "Tag" (
 -- CreateTable
 CREATE TABLE "Post" (
     "id" TEXT NOT NULL,
-    "name" VARCHAR(225) NOT NULL,
+    "title" VARCHAR(100) NOT NULL,
     "content" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3) NOT NULL,

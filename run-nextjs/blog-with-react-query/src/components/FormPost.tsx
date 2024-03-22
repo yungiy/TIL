@@ -24,8 +24,6 @@ export default function FormPost({ submit, isEditing }: FormPostProps) {
     },
   });
 
-  console.log(dataTags);
-
   return (
     <form
       onSubmit={handleSubmit(submit)}
