@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Profile() {
   return (
-    <div>page</div>
+    <div>프로필 페이지</div>
   )
 }

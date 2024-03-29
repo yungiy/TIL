@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import {NextPage} from 'next';
-
 
 export default function NotFoundPage() {
   return (
