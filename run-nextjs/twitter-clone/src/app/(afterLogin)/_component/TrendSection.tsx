@@ -1,8 +1,14 @@
-import React from 'react'
+'use client'
 import style from './trendSection.module.css';
 import Trend from './Trend';
+import { usePathname } from 'next/navigation';
 
 export default function TrendSection() {
+
+  // explore에서는 안보이게 trendsection이 안보이게 만듦
+  const pathname = usePathname();
+  if(pathname === '/explore') return null;
+
   return (
     <div className={style.trendBg}>
       <div className={style.trend}>
