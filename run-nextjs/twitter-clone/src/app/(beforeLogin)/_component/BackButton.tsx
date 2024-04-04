@@ -3,6 +3,9 @@ import React from 'react';
 import style from './signup.module.css';
 
 export default function BackButton() {
+
+  const onClickClose = () => {};
+  
   return (
     <button className={style.closeButton} onClick={onClickClose}>
       <svg

@@ -13,7 +13,7 @@
   display: none;
 }
 
-@media all and (min-width: 1300px) {
+@media all and (min-width: 1000px) {
   .navPill > div {
       margin-left: 20px;
       margin-right: 16px;
