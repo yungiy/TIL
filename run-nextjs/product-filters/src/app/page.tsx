@@ -87,11 +87,14 @@ export default function Home() {
 
           {/* 제품 설명 */}
           <ul className='lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8'>
-          {products ? products.map((product) => <Product product={product.metadata!} />)
-           : 
-              new Array(12)
-                .fill(null)
-                .map((_, i) => <ProductSkeleton key={i} />))}
+            {products
+              ? products.map((product) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <Product product={product.metadata!} />
+                ))
+              : new Array(12)
+                  .fill(null)
+                  .map((_, i) => <ProductSkeleton key={i} />)}
           </ul>
         </div>
       </section>
