@@ -3,11 +3,11 @@ import Link from 'next/link';
 import React from 'react';
 
 interface PostCardProps {
-  post: { id: string; title: string; content: string;  };
+  post: { id: string; title: string; content: string };
 }
 
 export default function PostCard({ post }: PostCardProps) {
-  const { title, content} = post;
+  const { title, content } = post;
   return (
     <div className='card w-full bg-base-100 shadow-xl border'>
       <div className='card-body'>

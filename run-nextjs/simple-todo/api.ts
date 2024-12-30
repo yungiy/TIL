@@ -1,6 +1,6 @@
 import { ITask } from './src/types/tasks';
 
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'http://localhost:3000';
 
 export const getAllTodos = async (): Promise<ITask[]> => {
   const res = await fetch(`${baseUrl}/task`, { cache: 'no-store' });

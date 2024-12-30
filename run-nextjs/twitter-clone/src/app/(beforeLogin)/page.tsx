@@ -1,4 +1,4 @@
-import Main from "@/app/(beforeLogin)/_components/Main";
+
 import {auth} from "@/auth";
 import {redirect} from "next/navigation";
 
@@ -9,6 +9,6 @@ export default async function Home() {
     return null;
   }
   return (
-    <Main />
+    
   )
 }
